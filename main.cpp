@@ -1,48 +1,36 @@
-//grade calculating algorithm for British universities
-//subject to covid-19 mitigations for UCL
-//covid-19 mitiations are: 6 year1 modules weighted at 1 out of 9, 4 year2 modules weighted at 3 out of 9, 8 year3 modules weighted at 5 out of 9.
+/*
+    grade calculating algorithm for British universities
+    subject to covid-19 mitigations for UCL
+    covid-19 mitiations are: 6 year1 modules weighted at 1 out of 9, 4 year2 modules weighted at 3 out of 9, 8 year3 modules weighted at 5 out of 9.
+*/
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
-class grades
+double averageMark(int year, int moduleCount)
 {
-public:
-    int g11, g12, g13, g14, g15, g16, g21, g22, g23, g24, g31, g32, g33, g34, g35, g36, g37, g38;
-    int firstyear, secondyear, thirdyear;
-};
+    double totalMark = 0.00;
 
-int year1()
-{
-    int g11, g12, g13, g14, g15, g16;
-    cout << "Enter your year 1 grades" << endl;
-    cin >> g11 >> g12 >> g13 >> g14 >> g15 >> g16;
-    int firstyear = (g11+g12+g13+g14+g15+g16)/6;
-    return firstyear;
-}
+    cout << "Enter your year " << year << " grades." << endl;
 
-int year2()
-{
-    int g21, g22, g23, g24;
-    cout << "Enter your year 2 grades" << endl;
-    cin >> g21 >> g22 >> g23 >> g24;
-    int secondyear = (g21+g22+g23+g24)/4;
-    return secondyear;
-}
+    for (int i = 0; i < moduleCount; i++)
+    {
+        cout << "Module " << i + 1 << ": ";
+        double mark;
+        cin >> mark;
+        totalMark += mark;
+    }
 
-int year3()
-{
-    int g31, g32, g33, g34, g35, g36, g37, g38;
-    cout << "Enter your year 3 grades" << endl;
-    cin >> g31 >> g32 >> g33 >> g34 >> g35 >> g36 >> g37 >> g38;
-    int thirdyear = (g31+g32+g33+g34+g35+g36+g37+g38)/8;
-    return thirdyear;
+    return totalMark / moduleCount;
 }
 
 int main()
 {
-    int result90 = (year1()/9) + (3*(year2()/9)) + (5*(year3()/9));
-    int result = (result90 * 100)/90;
-    cout << result;
+    double result90 = (averageMark(1, 6) / 9) + (3 * (averageMark(2, 4) / 9)) + (5 * (averageMark(3, 8) / 9));
+    double result = (result90 * 100) / 90;
+
+    cout << "Your final result is: " << fixed << setprecision(2) << result << endl; // Round to 2 decimal places and print
+
     return 0;
 }
